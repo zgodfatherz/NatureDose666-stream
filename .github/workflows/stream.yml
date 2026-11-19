@@ -7,8 +7,8 @@ jobs:
   stream:
     runs-on: ubuntu-24.04
     steps:
-      - name: Check FFmpeg
-        run: ffmpeg -version | head -n 1
+      - name: Setup FFmpeg
+        uses: AnimMouse/setup-ffmpeg@v1
 
       - name: Download loop.mp4 from Release
         run: |
