@@ -1,0 +1,25 @@
+name: NatureDose666 Live Stream
+
+on:
+  workflow_dispatch:
+
+jobs:
+  stream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install FFmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Download loop.mp4 from Release
+        run: |
+          curl -L -o loop.mp4 \
+            "https://github.com/${{ github.repository }}/releases/download/v1.0/loop.mp4"
+
+      - name: Stream loop.mp4 to YouTube Live (5h 30m)
+        env:
+          YT_STREAM_KEY: ${{ secrets.YT_STREAM_KEY }}
+        run: |
+          timeout 19800 ffmpeg -re -stream_loop -1 -i loop.mp4 \
+            -c:v copy -c:a copy -f flv \
+            "rtmp://a.rtmp.youtube.com/live2/${YT_STREAM_KEY}" || true
+            
