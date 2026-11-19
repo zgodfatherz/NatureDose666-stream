@@ -7,12 +7,9 @@ jobs:
   stream:
     runs-on: ubuntu-latest
     steps:
-      - name: Install FFmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
-
       - name: Download loop.mp4 from Release
         run: |
-          curl -L -o loop.mp4 \
+          curl -fL -o loop.mp4 \
             "https://github.com/${{ github.repository }}/releases/download/v1.0/loop.mp4"
 
       - name: Stream loop.mp4 to YouTube Live (5h 30m)
