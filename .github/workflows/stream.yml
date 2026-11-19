@@ -5,17 +5,10 @@ on:
 
 jobs:
   stream:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - name: Setup FFmpeg
-        run: |
-          if ! command -v ffmpeg &> /dev/null; then
-            curl -fsSL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -o ffmpeg.tar.xz
-            tar -xf ffmpeg.tar.xz
-            sudo mv ffmpeg-*-amd64-static/ffmpeg /usr/local/bin/
-            sudo chmod +x /usr/local/bin/ffmpeg
-          fi
-          ffmpeg -version | head -n 1
+      - name: Check FFmpeg
+        run: ffmpeg -version | head -n 1
 
       - name: Download loop.mp4 from Release
         run: |
