@@ -2,6 +2,12 @@ name: NatureDose666 Live Stream
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '17 */5 * * *'
+
+concurrency:
+  group: naturedose666-live-stream
+  cancel-in-progress: true
 
 jobs:
   stream:
@@ -16,7 +22,7 @@ jobs:
             "https://github.com/${{ github.repository }}/releases/download/v1.0/loop.mp4"
           ls -lh loop.mp4
 
-      - name: Stream loop.mp4 to YouTube Live (5h 30m)
+      - name: Stream loop.mp4 to YouTube Live (5h 15m)
         env:
           YT_STREAM_KEY: ${{ secrets.YT_STREAM_KEY }}
         run: |
@@ -24,7 +30,7 @@ jobs:
             echo "ERROR: YT_STREAM_KEY secret is empty!"
             exit 1
           fi
-          timeout 19800 ffmpeg -re -stream_loop -1 -i loop.mp4 \
+          timeout 18900 ffmpeg -re -stream_loop -1 -i loop.mp4 \
             -c:v copy -c:a copy -f flv \
             "rtmp://a.rtmp.youtube.com/live2/${YT_STREAM_KEY}" || [ $? -eq 124 ]
             
